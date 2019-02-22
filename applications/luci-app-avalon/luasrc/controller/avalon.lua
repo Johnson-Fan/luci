@@ -63,12 +63,12 @@ function api_getstatus()
 	end
 
 	-- Modulars information
-	local stats = luci.util.execi("/usr/bin/cgminer-api -o estats | sed \"s/|/\\n/g\" | grep AV9")
+	local stats = luci.util.execi("/usr/bin/cgminer-api -o estats | sed \"s/|/\\n/g\" | grep AV10")
 	local devdata = {}
 	if stats then
 		for line in stats do
 			local id = line:match(".*," ..
-				"ID=AV9([%d]+),")
+				"ID=AV10([%d]+),")
 			if id then
 				local istart, iend = line:find("MM ID")
 				while (istart) do
@@ -78,7 +78,7 @@ function api_getstatus()
 					".-" ..
 					"Temp%[(-?%d+)%]" ..
 					".-" ..
-					"Fan%[(-?%d+)%]" ..
+					"Fan1%[(-?%d+)%]" ..
 					".-" ..
 					"GHSmm%[(-?[%.%d]+)%]")
 

@@ -188,6 +188,7 @@ function pools()
 			"Stratum Active=(%a+)," ..
 			".-," ..
 			"Stratum Difficulty=(-?%d+)[%.%d]+," ..
+			".-," ..
 			"Has GBT=(%a+)")
 		if pi then
 			if lst == "0" then
@@ -279,7 +280,7 @@ end
 function stats()
 	local data = {}
 
-	local stats = luci.util.execi("/usr/bin/cgminer-api -o estats | sed \"s/|/\\n/g\" | grep AV9")
+	local stats = luci.util.execi("/usr/bin/cgminer-api -o estats | sed \"s/|/\\n/g\" | grep AV10")
 
 	if not stats then
 		return
@@ -288,14 +289,14 @@ function stats()
 	for line in stats do
 		local id =
 		line:match(".*" ..
-		"ID=AV9([%d]+),")
+		"ID=AV10([%d]+),")
 
 		if id then
 			local istart, iend = line:find("MM ID")
 			while (istart) do
 				local istr = line:sub(istart)
 				local idname
-				local index, idn, dnan, elapsedn, lwn, dhn, tempn, tempm, fann, fanr, ghsmm, wun, ledn, echu, ecmm, crc =
+				local index, idn, dnan, elapsedn, lwn, dhn, tempn, tempm, fann1, fann2, fanr, ghsmm, wun, ledn, echu, ecmm, crc =
 				istr:match("MM ID(%d+)=" ..
 					"Ver%[([%+%-%d%a]+)%]" ..
 					".-" ..
@@ -311,7 +312,9 @@ function stats()
 					".-" ..
 					"TMax%[(-?%d+)%]" ..
 					".-" ..
-					"Fan%[(-?%d+)%]" ..
+					"Fan1%[(-?%d+)%]" ..
+					".-" ..
+					"Fan2%[(-?%d+)%]" ..
 					".-" ..
 					"FanR%[(-?%d+%%)%]" ..
 					".-" ..
@@ -321,14 +324,14 @@ function stats()
 					".-" ..
 					"Led%[(%d)%]" ..
 					".-" ..
-					"ECHU%[(%d+%s%d+%s%d+%s%d+%s%d+%s%d+)%]" ..
+					"ECHU%[(%d+%s%d+)%]" ..
 					".-" ..
 					"ECMM%[(%d+)%]" ..
 					".-" ..
-					"CRC%[(%d+%s%d+%s%d+%s%d+%s%d+%s%d+)%]")
+					"CRC%[(%d+%s%d+)%]")
 
 					if idn ~= nil then
-						idname = 'A' .. string.sub(idn, 1, 3) .. 'S-'
+						idname = 'A' .. string.sub(idn, 1, 2) .. 'S-'
 
 						data[#data+1] = {
 							['devid'] = id,
@@ -340,7 +343,8 @@ function stats()
 							['lw'] = lwn or '0',
 							['dh'] = dhn or '0',
 							['temp'] = (tempn or '0') .. ' / ' .. (tempm or '0'),
-							['fan'] = (fann or '0') .. 'RPM / ' .. (fanr or '0'),
+							['fan1'] = (fann1 or '0') .. 'RPM / ' .. (fanr or '0'),
+							['fan2'] = (fann2 or '0') .. 'RPM / ' .. (fanr or '0'),
 							['ghsmm'] = ghsmm or '0',
 							['wu'] = wun or '0',
 							['led'] = ledn or '0',

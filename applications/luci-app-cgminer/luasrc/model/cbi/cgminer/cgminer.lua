@@ -32,19 +32,6 @@ pool3url:value("stratum+tcp://stratum.haobtc.com:25")
 pool3user = conf:option(Value, "pool3user", translate("Pool3 worker"))
 pool3pw = conf:option(Value, "pool3pw", translate("Pool3 password"))
 
-vo = conf:option(ListValue, "voltage_level_offset", translate("Voltage Level Offset(Default: 0)"))
-vo.default = "0"
-vo:value("+1", translate("+1"))
-vo:value("-1", translate("-1"))
-vo:value("-2", translate("-2"))
-vo:value("0", translate("0"))
-
-fan_min = conf:option(Value, "fan_min", translate("Minimum Fan%(Range: 0-100, Default: 10%)"))
-fan_min.datatype = "range(0, 100)"
-
-fan_max = conf:option(Value, "fan_max", translate("Maximum Fan%(Range: 0-100, Default: 100%)"))
-fan_max.datatype = "range(0, 100)"
-
 local boardinfo = luci.util.ubus("system", "board") or { }
 if (boardinfo.model == "Canaan Z Controller") then
 	ssp = conf:option(ListValue, "ssp", translate("SmartSpeed+(Default: Disable)"))

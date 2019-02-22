@@ -127,6 +127,7 @@ t1:option(DummyValue, "dh", translate("<abbr title=\"Device Hardware Error\">DH<
 t1:option(DummyValue, "ghsmm", translate("GHSasc"))
 t1:option(DummyValue, "wu", translate("WU"))
 t1:option(DummyValue, "temp", translate("<abbr title=\"Inflow/Outflow\">Temperature(C)</abbr>"))
-t1:option(DummyValue, "fan", translate("<abbr title=\"RPM/Percentage\">Fan</abbr>"))
+t1:option(DummyValue, "fan1", translate("<abbr title=\"RPM/Percentage\">Fan1</abbr>"))
+t1:option(DummyValue, "fan2", translate("<abbr title=\"RPM/Percentage\">Fan2</abbr>"))
 
 return f
